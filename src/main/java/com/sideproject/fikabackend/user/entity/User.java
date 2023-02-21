@@ -1,5 +1,7 @@
 package com.sideproject.fikabackend.user.entity;
 
+import com.sideproject.fikabackend.status.entity.Status;
+import com.sideproject.fikabackend.team.entity.Team;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
