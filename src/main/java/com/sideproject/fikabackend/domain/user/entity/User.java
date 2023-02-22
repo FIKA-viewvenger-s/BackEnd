@@ -1,7 +1,7 @@
-package com.sideproject.fikabackend.user.entity;
+package com.sideproject.fikabackend.domain.user.entity;
 
-import com.sideproject.fikabackend.status.entity.Status;
-import com.sideproject.fikabackend.team.entity.Team;
+import com.sideproject.fikabackend.domain.status.entity.Status;
+import com.sideproject.fikabackend.domain.team.entity.Team;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;

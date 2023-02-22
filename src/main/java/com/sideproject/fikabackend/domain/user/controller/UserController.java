@@ -1,7 +1,7 @@
-package com.sideproject.fikabackend.user.controller;
+package com.sideproject.fikabackend.domain.user.controller;
 
-import com.sideproject.fikabackend.user.dto.UserRequestDto;
-import com.sideproject.fikabackend.user.repository.UserRepository;
+import com.sideproject.fikabackend.domain.user.dto.UserRequestDto;
+import com.sideproject.fikabackend.domain.user.repository.UserRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

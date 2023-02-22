@@ -1,7 +1,7 @@
-package com.sideproject.fikabackend.community.entity;
+package com.sideproject.fikabackend.domain.community.entity;
 
 import com.sideproject.fikabackend.global.Timestamped;
-import com.sideproject.fikabackend.user.entity.User;
+import com.sideproject.fikabackend.domain.user.entity.User;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;

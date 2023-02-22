@@ -1,7 +1,7 @@
-package com.sideproject.fikabackend.user.repository;
+package com.sideproject.fikabackend.domain.user.repository;
 
 
-import com.sideproject.fikabackend.user.entity.User;
+import com.sideproject.fikabackend.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

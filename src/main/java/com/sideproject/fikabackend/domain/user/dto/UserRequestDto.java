@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.user.dto;
+package com.sideproject.fikabackend.domain.user.dto;
 
 
 import lombok.Getter;
