@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.config;
+package com.sideproject.fikabackend.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,6 @@
 package com.sideproject.fikabackend.community.entity;
 
-import com.sideproject.fikabackend.Timestamped;
+import com.sideproject.fikabackend.global.Timestamped;
 import com.sideproject.fikabackend.user.entity.User;
 import lombok.NoArgsConstructor;
 

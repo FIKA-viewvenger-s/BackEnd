@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend;
+package com.sideproject.fikabackend.global;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

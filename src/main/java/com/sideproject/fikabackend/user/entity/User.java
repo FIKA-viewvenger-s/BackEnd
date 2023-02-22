@@ -62,7 +62,7 @@ public class User {
     private List<Status> status = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "teamNm",nullable = false)
+    @JoinColumn(name = "team_nm",nullable = false)
     private Team team;
 
 }
