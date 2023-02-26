@@ -4,8 +4,6 @@ package com.sideproject.fikabackend.domain.user.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-
 @NoArgsConstructor
 @Getter
 public class UserRequestDto {

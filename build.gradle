@@ -27,9 +27,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// swagger
-	implementation("io.springfox:springfox-swagger2:2.9.2")
-	implementation("io.springfox:springfox-swagger-ui:2.9.2")
+	// swagger(springdoc)
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.14")
+	// Rest Controller 사용 시 @AuthenticationPrincipal 을 무시할 수 있다.
+//	implementation("org.springdoc:springdoc-openapi-security:1.6.14")
 }
 
 tasks.named('test') {
