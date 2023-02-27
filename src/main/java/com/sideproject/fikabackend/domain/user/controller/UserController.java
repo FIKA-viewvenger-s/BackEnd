@@ -1,17 +1,17 @@
 package com.sideproject.fikabackend.domain.user.controller;
 
+import com.sideproject.fikabackend.domain.user.dto.LoginReq;
 import com.sideproject.fikabackend.domain.user.dto.UserRequestDto;
+import com.sideproject.fikabackend.domain.user.dto.LoginRes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "User", description = "유저 관련 API")
+@RequestMapping("users")
 @RestController
 public class UserController {
 
@@ -20,7 +20,7 @@ public class UserController {
     @ApiResponse(responseCode = "400", description = "BAD REQUEST")
     @ApiResponse(responseCode = "404", description = "NOT FOUND")
     @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
-    @PostMapping("/api/user")
+    @PostMapping
     public ResponseEntity<HttpStatus> signup(@RequestBody UserRequestDto userRequestDto) {
         // todo: 회원가입 비즈니스 로직
         return ResponseEntity.ok(HttpStatus.OK);
@@ -31,9 +31,15 @@ public class UserController {
     @ApiResponse(responseCode = "400", description = "BAD REQUEST")
     @ApiResponse(responseCode = "404", description = "NOT FOUND")
     @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
-    @GetMapping("/api/user")
-    public ResponseEntity<HttpStatus> login(@RequestBody UserRequestDto userRequestDto) {
-        // todo: 회원가입 비즈니스 로직
-        return ResponseEntity.ok(HttpStatus.OK);
+    @PostMapping("login")
+    public ResponseEntity<LoginRes> login(@RequestBody LoginReq loginReq) {
+        // todo: 로그인 비즈니스 로직
+        LoginRes loginRes = new LoginRes();
+        loginRes.setUId("10");
+        loginRes.setUserName(loginReq.getUserName());
+        loginRes.setNickName("MessiGod");
+        loginRes.setRegion("korea");
+        loginRes.setAge(72);
+        return ResponseEntity.ok(loginRes);
     }
 }
