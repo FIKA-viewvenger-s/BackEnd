@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class SignUpReq {
+public class SignUpReqDto {
 
     private String uId;
     private String pw;
