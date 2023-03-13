@@ -1,7 +1,7 @@
 package com.sideproject.fikabackend.domain.user.controller;
 
 import com.sideproject.fikabackend.domain.user.dto.LoginReq;
-import com.sideproject.fikabackend.domain.user.dto.UserRequestDto;
+import com.sideproject.fikabackend.domain.user.dto.SignUpReq;
 import com.sideproject.fikabackend.domain.user.dto.LoginRes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,7 +21,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "NOT FOUND")
     @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     @PostMapping
-    public ResponseEntity<HttpStatus> signup(@RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<HttpStatus> signup(@RequestBody SignUpReq signUpReq) {
         // todo: 회원가입 비즈니스 로직
         return ResponseEntity.ok(HttpStatus.OK);
     }
