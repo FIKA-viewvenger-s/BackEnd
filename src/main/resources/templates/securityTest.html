@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>스프링 시큐리티</title>
+</head>
+<body>
+<h2>sec</h2>
+    <div sec:authorize="hasRole('USER')">user권한일 경우</div>
+    <div sec:authorize="hasRole('ADMIN')">admin권한일 경우</div>
+    <div sec:authorize="isAuthenticated()">로그인해서 인증을 받은 사람</div>
+    인증받은 사람 :
+    <div sec:authentication="name"></div>
+    인증받은 사람의 권한 :
+    <div sec:authentication="principal.authorities"></div>
+</body>
+</html>
