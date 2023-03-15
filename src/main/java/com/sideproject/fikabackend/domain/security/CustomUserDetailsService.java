@@ -1,9 +1,8 @@
 package com.sideproject.fikabackend.domain.security;
 
-
-import com.sideproject.fikabackend.domain.user.entity.User;
 import com.sideproject.fikabackend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,11 +24,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
-    private UserDetails createUserDetails(User user) {
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUsername())
+    private UserDetails createUserDetails(com.sideproject.fikabackend.domain.user.entity.User user) {
+        return User.builder()
+                .username(user.getUserId())
                 .password(passwordEncoder.encode(user.getPw()))
+                .roles(user.getRoles().toArray(new String[0]))
                 .build();
     }
-
 }
+
+

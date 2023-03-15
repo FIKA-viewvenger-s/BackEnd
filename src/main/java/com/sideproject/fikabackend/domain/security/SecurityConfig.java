@@ -20,18 +20,15 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // h2 console 화면 사용을 위해 설정
+        http.headers().frameOptions().disable();
         //csrf 미적용
         http.csrf().disable();
 
-        // h2 console 화면 사용을 위해 설정
-        http.headers().frameOptions().disable();
-
-        http
-                //spring security에서 제공하는 로그인 인증창을 disable함
-                .httpBasic().disable()
-
-                // jwt token으로 인증하므로 stateless 하도록 처리
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        //spring security에서 제공하는 로그인 인증창을 disable함
+        http.httpBasic().disable()
+        // jwt token으로 인증하므로 stateless 하도록 처리
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         //URL별 접근제어 관리 옵션
         http.authorizeRequests()
@@ -40,7 +37,6 @@ public class SecurityConfig {
                 // 갈수록 일반적인 경우를 두어야 경로가 꼬이거나 무한루프 발생가 발생 안함
 
                 .antMatchers("/","/**","/h2-console/**").permitAll()
-//                access("permitAll")
                 // 해당 API에 대해서는 모든 요청을 허가한다는 설정이다.
                 .antMatchers("/users/login").permitAll()
                 // 해당 API에 대해서는 Admin 권한이 있어야 요청할 수 있다는 설정이다.
@@ -51,8 +47,6 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-
-
     }
 
     @Bean
@@ -60,3 +54,4 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
+

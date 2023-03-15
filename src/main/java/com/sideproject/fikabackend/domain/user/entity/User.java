@@ -3,21 +3,26 @@ package com.sideproject.fikabackend.domain.user.entity;
 import com.sideproject.fikabackend.domain.status.entity.Status;
 import com.sideproject.fikabackend.domain.team.entity.Team;
 import com.sideproject.fikabackend.global.util.Timestamped;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Setter
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+//@Setter
+//@Getter
+//@NoArgsConstructor
+//@Entity
 public class User extends Timestamped implements UserDetails {
 
     @Id
@@ -46,15 +51,15 @@ public class User extends Timestamped implements UserDetails {
     @Column(nullable = true)
     private String region;
 
-    @Column(nullable = true)
-    private int age;
+//    @Column(nullable = true)
+//    private int age;
 
     ////////////////////////////////////////////// 회원 가입 이후 받는 정보
-    @Column
-    private int mannerPnt;
-
-    @Column
-    private int reCode;
+//    @Column
+//    private int mannerPnt;
+//
+//    @Column
+//    private int reCode;
 
     @Column
     private String position;
@@ -73,9 +78,15 @@ public class User extends Timestamped implements UserDetails {
     @JoinColumn(name = "team_nm",nullable = true)
     private Team team;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -107,4 +118,5 @@ public class User extends Timestamped implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

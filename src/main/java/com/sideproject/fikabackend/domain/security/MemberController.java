@@ -1,7 +1,6 @@
 package com.sideproject.fikabackend.domain.security;
 
 import com.sideproject.fikabackend.domain.user.dto.LoginReqDto;
-import com.sideproject.fikabackend.domain.user.entity.UserRole;
 import com.sideproject.fikabackend.domain.user.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,16 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
-public class UserController {
+public class MemberController {
 
     private final LoginService loginService;
 
 
     @PostMapping("/login")
     public TokenInfo login(@RequestBody LoginReqDto loginReqDto) {
-        String userId = loginReqDto.getUserId();
-        String pw = loginReqDto.getPw();
-        TokenInfo tokenInfo = loginService.login(userId, pw);
+        String username = loginReqDto.getUserId();
+        String password = loginReqDto.getPw();
+        TokenInfo tokenInfo = loginService.login(username, password);
         return tokenInfo;
     }
+
 }
