@@ -15,14 +15,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@Setter
-//@Getter
-//@NoArgsConstructor
-//@Entity
+@Table(name = "users")
 public class User extends Timestamped implements UserDetails {
 
     @Id
@@ -51,15 +47,15 @@ public class User extends Timestamped implements UserDetails {
     @Column(nullable = true)
     private String region;
 
-//    @Column(nullable = true)
-//    private int age;
+    @Column(nullable = true)
+    private Long age;
 
     ////////////////////////////////////////////// 회원 가입 이후 받는 정보
-//    @Column
-//    private int mannerPnt;
-//
-//    @Column
-//    private int reCode;
+    @Column
+    private Long mannerPnt;
+
+    @Column
+    private Long reCode;
 
     @Column
     private String position;
@@ -79,7 +75,7 @@ public class User extends Timestamped implements UserDetails {
     private Team team;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
+//    @Builder.Default
     private List<String> roles = new ArrayList<>();
 
     @Override
