@@ -51,15 +51,15 @@ public class User extends Timestamped implements UserDetails {
     @Column(nullable = true)
     private String region;
 
-//    @Column(nullable = true)
-//    private int age;
+    @Column
+    private Long age;
 
     ////////////////////////////////////////////// 회원 가입 이후 받는 정보
-//    @Column
-//    private int mannerPnt;
-//
-//    @Column
-//    private int reCode;
+    @Column
+    private Long mannerPnt;
+
+    @Column
+    private Long reCode;
 
     @Column
     private String position;
