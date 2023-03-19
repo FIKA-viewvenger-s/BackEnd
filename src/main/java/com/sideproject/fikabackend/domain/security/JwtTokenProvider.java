@@ -17,9 +17,7 @@ import org.springframework.stereotype.Component;
 import java.net.http.HttpHeaders;
 import java.net.http.HttpResponse;
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // JWT 토큰 생성, 토큰 복호화 및 정보 추출, 토큰 유효성 검증의 기능이 구현된 클래스이다.
@@ -28,6 +26,10 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
 
     private final Key key;
+
+    public static final String ACCESSTOKEN_HEADER = "access-token";
+    public static final String REFRESHTOKEN_HEADER = "refresh-token";
+    private static final String BEARER_PREFIX = "Bearer ";
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -42,6 +44,9 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
 
         long now = (new Date()).getTime();
+
+
+
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + 86400000);
         String accessToken = Jwts.builder()
@@ -56,20 +61,36 @@ public class JwtTokenProvider {
         String refreshToken = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setExpiration(new Date(now + 86400000))
+                .setSubject(authentication.getName())
+                .claim("auth", authorities)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
+<<<<<<< HEAD
         TokenInfo.builder()
                 .grantType("Bearer")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
+=======
+
+
+//        Map<String, Object> tokens = new HashMap<>();
+//        tokens.put("access",accessToken);
+//        tokens.put("refresh",refreshToken);
+//
+//        String test = Jwts.builder()
+//                .setHeaderParams(tokens)
+//                .compact();
+>>>>>>> 4e871a5 (Fix: 로그인response 1차 완료)
 
         return TokenInfo.builder()
                 .grantType("Bearer")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
+
+
     }
 
 

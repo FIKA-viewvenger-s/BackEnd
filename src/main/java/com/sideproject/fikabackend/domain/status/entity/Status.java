@@ -19,22 +19,22 @@ public class Status {
     private User user;
 
     @Column(nullable = false)
-    private int shooting;
+    private Long shooting;
 
     @Column(nullable = false)
-    private int drribble;
+    private Long drribble;
 
     @Column(nullable = false)
-    private int physic;
+    private Long physic;
 
     @Column(nullable = false)
-    private int passing;
+    private Long passing;
 
     @Column(nullable = false)
-    private int keeping;
+    private Long keeping;
 
     @Column(nullable = false)
-    private int mental;
+    private Long mental;
 
 
 
