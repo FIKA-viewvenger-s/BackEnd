@@ -1,5 +1,7 @@
-package com.sideproject.fikabackend.domain.security;
+package com.sideproject.fikabackend.global.security;
 
+import com.sideproject.fikabackend.global.jwt.JwtAuthenticationFilter;
+import com.sideproject.fikabackend.global.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

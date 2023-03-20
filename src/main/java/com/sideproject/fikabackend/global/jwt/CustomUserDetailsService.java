@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.security;
+package com.sideproject.fikabackend.global.jwt;
 
 import com.sideproject.fikabackend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

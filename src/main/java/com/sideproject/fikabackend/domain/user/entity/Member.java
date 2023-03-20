@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends Timestamped implements UserDetails {
+public class Member extends Timestamped implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,9 +47,13 @@ public class User extends Timestamped implements UserDetails {
     @Column(nullable = true)
     private String region;
 
+<<<<<<< HEAD:src/main/java/com/sideproject/fikabackend/domain/user/entity/User.java
 <<<<<<< HEAD
     @Column
 =======
+=======
+
+>>>>>>> bd6226a (Fix: 디렉토리 정리):src/main/java/com/sideproject/fikabackend/domain/user/entity/Member.java
     @Column(nullable = true)
 >>>>>>> 4e871a5 (Fix: 로그인response 1차 완료)
     private Long age;

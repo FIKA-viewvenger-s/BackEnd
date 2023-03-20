@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.security;
+package com.sideproject.fikabackend.global.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -29,6 +29,7 @@ public class JwtTokenProvider {
 
     public static final String ACCESSTOKEN_HEADER = "access-token";
     public static final String REFRESHTOKEN_HEADER = "refresh-token";
+
     private static final String BEARER_PREFIX = "Bearer ";
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -75,6 +76,7 @@ public class JwtTokenProvider {
 =======
 
 
+<<<<<<< HEAD:src/main/java/com/sideproject/fikabackend/domain/security/JwtTokenProvider.java
 //        Map<String, Object> tokens = new HashMap<>();
 //        tokens.put("access",accessToken);
 //        tokens.put("refresh",refreshToken);
@@ -84,6 +86,8 @@ public class JwtTokenProvider {
 //                .compact();
 >>>>>>> 4e871a5 (Fix: 로그인response 1차 완료)
 
+=======
+>>>>>>> bd6226a (Fix: 디렉토리 정리):src/main/java/com/sideproject/fikabackend/global/jwt/JwtTokenProvider.java
         return TokenInfo.builder()
                 .grantType("Bearer")
                 .accessToken(accessToken)
