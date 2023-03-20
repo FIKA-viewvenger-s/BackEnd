@@ -1,15 +1,17 @@
 package com.sideproject.fikabackend.domain.user.service;
 
-import com.sideproject.fikabackend.domain.security.JwtTokenProvider;
-import com.sideproject.fikabackend.domain.security.TokenInfo;
-import com.sideproject.fikabackend.domain.user.entity.UserRole;
+import com.sideproject.fikabackend.global.jwt.JwtTokenProvider;
+import com.sideproject.fikabackend.global.jwt.TokenInfo;
 import com.sideproject.fikabackend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,7 +24,7 @@ public class LoginService {
 
 
     @Transactional
-    public TokenInfo login(String username, String password) {
+    public ResponseEntity<?> login(String username, String password, HttpServletResponse response) {
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
@@ -34,6 +36,9 @@ public class LoginService {
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 
-        return tokenInfo;
+        response.addHeader(JwtTokenProvider.ACCESSTOKEN_HEADER, tokenInfo.getGrantType() + " " + tokenInfo.getAccessToken());
+        response.addHeader(JwtTokenProvider.REFRESHTOKEN_HEADER, tokenInfo.getGrantType() + " " + tokenInfo.getRefreshToken());
+
+        return ResponseEntity.ok("로그인 성공");
     }
 }
