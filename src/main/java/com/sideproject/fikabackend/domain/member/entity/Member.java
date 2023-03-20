@@ -1,5 +1,6 @@
-package com.sideproject.fikabackend.domain.user.entity;
+package com.sideproject.fikabackend.domain.member.entity;
 
+import com.sideproject.fikabackend.domain.member.dto.SignUpReqDto;
 import com.sideproject.fikabackend.domain.status.entity.Status;
 import com.sideproject.fikabackend.domain.team.entity.Team;
 import com.sideproject.fikabackend.global.util.Timestamped;
@@ -18,41 +19,37 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
 public class Member extends Timestamped implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userNm;
+    private Long memberNm;
 
     @Column(nullable = true)
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
-    @Column(nullable = true)
-    private String profileImg;
-
     @Column(nullable = false)
-    private String userId;
-
+    private String memberId;
     @Column(nullable = false)
     private String pw;
 
-    @Column(nullable = true)
-    private Long userName;
+    @Column(nullable = false)
+    private String userName;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String nickName;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String region;
 
-
-
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Long age;
 
     ////////////////////////////////////////////// 회원 가입 이후 받는 정보
+    @Column
+    private String profileImg;
+
     @Column
     private Long mannerPnt;
 
@@ -69,16 +66,26 @@ public class Member extends Timestamped implements UserDetails {
     private String odds;
 
     //스탯번호
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Status> status = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "team_nm",nullable = true)
     private Team team;
 
+    public Member(SignUpReqDto signUpReqDto){
+        this.memberId = signUpReqDto.getMemberId();
+        this.pw = signUpReqDto.getPw();
+        this.userName = signUpReqDto.getUserName();
+        this.nickName = signUpReqDto.getNickName();
+        this.region = signUpReqDto.getRegion();
+        this.age = signUpReqDto.getAge();
+    }
+
     @ElementCollection(fetch = FetchType.EAGER)
-//    @Builder.Default
+    //    @Builder.Default
     private List<String> roles = new ArrayList<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -89,7 +96,7 @@ public class Member extends Timestamped implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userId;
+        return memberId;
     }
 
     @Override

@@ -30,8 +30,6 @@ public class JwtTokenProvider {
     public static final String ACCESSTOKEN_HEADER = "access-token";
     public static final String REFRESHTOKEN_HEADER = "refresh-token";
 
-    private static final String BEARER_PREFIX = "Bearer ";
-
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         key = Keys.hmacShaKeyFor(keyBytes);

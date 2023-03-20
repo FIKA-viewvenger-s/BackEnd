@@ -1,8 +1,12 @@
-package com.sideproject.fikabackend.domain.user.service;
+package com.sideproject.fikabackend.domain.member.service;
 
+import com.sideproject.fikabackend.domain.member.dto.LoginReqDto;
+import com.sideproject.fikabackend.domain.member.dto.SignUpReqDto;
+import com.sideproject.fikabackend.domain.member.entity.Member;
+import com.sideproject.fikabackend.domain.member.entity.UserRole;
+import com.sideproject.fikabackend.domain.member.repository.MemberRepository;
 import com.sideproject.fikabackend.global.jwt.JwtTokenProvider;
 import com.sideproject.fikabackend.global.jwt.TokenInfo;
-import com.sideproject.fikabackend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,20 +18,32 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class LoginService {
+public class MemberService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
-
+    //회원가입
     @Transactional
-    public ResponseEntity<?> login(String username, String password, HttpServletResponse response) {
+    public ResponseEntity<?> signUp(SignUpReqDto signUpReqDto) {
+        if (memberRepository.findByMemberId(signUpReqDto.getMemberId()).isPresent()) {
+            return ResponseEntity.badRequest().body("중복 Id");
+        }
+        Member member = new Member(signUpReqDto);
+
+        memberRepository.save(member);
+
+        return ResponseEntity.ok(member);
+    }
+
+    // 로그인
+    @Transactional
+    public ResponseEntity<?> login(LoginReqDto loginReqDto, HttpServletResponse response) {
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginReqDto.getMemberId(), loginReqDto.getPw());
 
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
@@ -41,4 +57,6 @@ public class LoginService {
 
         return ResponseEntity.ok("로그인 성공");
     }
+
+
 }

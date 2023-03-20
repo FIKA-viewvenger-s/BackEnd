@@ -1,7 +1,7 @@
 package com.sideproject.fikabackend.domain.community.entity;
 
+import com.sideproject.fikabackend.domain.member.entity.Member;
 import com.sideproject.fikabackend.global.util.Timestamped;
-import com.sideproject.fikabackend.domain.user.entity.User;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -15,8 +15,8 @@ public class Community extends Timestamped {
     private Long postNm;
 
     @ManyToOne
-    @JoinColumn(name = "userNm")
-    private User user;
+    @JoinColumn(name = "memberNm")
+    private Member member;
 
     @Column(nullable = false)
     private String cateGoru;
