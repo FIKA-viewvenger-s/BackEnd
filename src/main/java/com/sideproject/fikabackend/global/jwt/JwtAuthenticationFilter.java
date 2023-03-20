@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.security;
+package com.sideproject.fikabackend.global.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

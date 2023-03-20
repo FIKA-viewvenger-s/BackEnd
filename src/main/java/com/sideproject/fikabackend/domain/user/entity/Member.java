@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends Timestamped implements UserDetails {
+public class Member extends Timestamped implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +46,7 @@ public class User extends Timestamped implements UserDetails {
 
     @Column(nullable = true)
     private String region;
+
 
     @Column(nullable = true)
     private Long age;

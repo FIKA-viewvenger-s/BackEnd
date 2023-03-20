@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.security;
+package com.sideproject.fikabackend.global.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -27,11 +27,12 @@ public class JwtTokenProvider {
 
     public static final String ACCESSTOKEN_HEADER = "access-token";
     public static final String REFRESHTOKEN_HEADER = "refresh-token";
+
     private static final String BEARER_PREFIX = "Bearer ";
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
+        key = Keys.hmacShaKeyFor(keyBytes);
     }
 
     // 유저 정보를 가지고 AccessToken, RefreshToken 을 생성하는 메서드
@@ -48,6 +49,7 @@ public class JwtTokenProvider {
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + 86400000);
         String accessToken = Jwts.builder()
+                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
                 .setExpiration(accessTokenExpiresIn)
@@ -56,6 +58,7 @@ public class JwtTokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
+                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setExpiration(new Date(now + 86400000))
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -63,14 +66,6 @@ public class JwtTokenProvider {
                 .compact();
 
 
-
-//        Map<String, Object> tokens = new HashMap<>();
-//        tokens.put("access",accessToken);
-//        tokens.put("refresh",refreshToken);
-//
-//        String test = Jwts.builder()
-//                .setHeaderParams(tokens)
-//                .compact();
 
         return TokenInfo.builder()
                 .grantType("Bearer")
@@ -80,6 +75,10 @@ public class JwtTokenProvider {
 
 
     }
+
+
+
+
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {
