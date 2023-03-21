@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
-@Tag(name = "Users", description = "유저 관련 API")
-@RequestMapping("users")
+@Tag(name = "Members", description = "유저 관련 API")
+@RequestMapping("members")
 @RequiredArgsConstructor
 @RestController
 public class MemberController {
 
     private final MemberService memberService;
 
-    @Operation(summary = "회원 가입 요청", description = "회원가입을 하기 위한 api 입니다.", tags = {"User"})
+    @Operation(summary = "회원 가입 요청", description = "회원가입을 하기 위한 api 입니다.", tags = {"Members"})
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignUpReqDto signUpReqDto) {
         // todo: 회원가입 비즈니스 로직
         return memberService.signUp(signUpReqDto);
     }
 
-    @Operation(summary = "로그인 요청", description = "로그인을 하기 위한 api 입니다.", tags = {"Users"})
+    @Operation(summary = "로그인 요청", description = "로그인을 하기 위한 api 입니다.", tags = {"Members"})
     @PostMapping("/login")
     // todo: 로그인 비즈니스 로직
     public ResponseEntity<?> login(@RequestBody LoginReqDto loginReqDto, HttpServletResponse response) {
