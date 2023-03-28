@@ -1,6 +1,7 @@
 package com.sideproject.fikabackend.global.jwt;
 
-import com.sideproject.fikabackend.domain.user.repository.UserRepository;
+import com.sideproject.fikabackend.domain.member.repository.MemberRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,24 +12,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomMemberDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        return userRepository.findByUserId(userId)
-                .map(this::createUserDetails)
+    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
+        return memberRepository.findByMemberId(memberId)
+                .map(this::createMemberDetails)
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
     }
 
     // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
-    private UserDetails createUserDetails(com.sideproject.fikabackend.domain.user.entity.User user) {
+    private UserDetails createMemberDetails(com.sideproject.fikabackend.domain.member.entity.Member member) {
         return User.builder()
-                .username(user.getUserId())
-                .password(passwordEncoder.encode(user.getPw()))
-                .roles(user.getRoles().toArray(new String[0]))
+                .username(member.getMemberId())
+                .password(passwordEncoder.encode(member.getPw()))
+                .roles(member.getRoles().toArray(new String[0]))
                 .build();
     }
 }

@@ -1,6 +1,6 @@
 package com.sideproject.fikabackend.domain.status.entity;
 
-import com.sideproject.fikabackend.domain.user.entity.User;
+import com.sideproject.fikabackend.domain.member.entity.Member;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -15,8 +15,8 @@ public class Status {
 
     //유저 정보
     @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
-    private User user;
+    @JoinColumn(name = "member_nm",nullable = false)
+    private Member member;
 
     @Column(nullable = false)
     private Long shooting;

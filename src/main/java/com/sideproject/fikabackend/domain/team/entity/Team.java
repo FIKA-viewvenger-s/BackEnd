@@ -1,6 +1,6 @@
 package com.sideproject.fikabackend.domain.team.entity;
 
-import com.sideproject.fikabackend.domain.user.entity.User;
+import com.sideproject.fikabackend.domain.member.entity.Member;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -20,7 +20,7 @@ public class Team {
 
     //유저 정보
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
-    private List<User> users = new ArrayList<>();
+    private List<Member> members = new ArrayList<>();
 
 
 }

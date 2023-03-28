@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.user.entity;
+package com.sideproject.fikabackend.domain.member.entity;
 
 public enum UserRole {
 

@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.user.dto;
+package com.sideproject.fikabackend.domain.member.dto;
 
 
 import lombok.Getter;
@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class SignUpReqDto {
-
-    private String uId;
+    private String memberId;
     private String pw;
-    private Long userName;
+    private String userName;
     private String nickName;
     private String region;
-    private int age;
+    private Long age;
 }

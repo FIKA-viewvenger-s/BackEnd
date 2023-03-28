@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.user.dto;
+package com.sideproject.fikabackend.domain.member.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class LoginResDto {
 
-    private String uId;
+    private String memberId;
     private String userName;
     private String nickName;
     private String region;
