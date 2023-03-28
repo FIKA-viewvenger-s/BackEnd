@@ -3,11 +3,11 @@ package com.sideproject.fikabackend.domain.member.service;
 import com.sideproject.fikabackend.domain.member.dto.LoginReqDto;
 import com.sideproject.fikabackend.domain.member.dto.SignUpReqDto;
 import com.sideproject.fikabackend.domain.member.entity.Member;
-import com.sideproject.fikabackend.domain.member.entity.UserRole;
 import com.sideproject.fikabackend.domain.member.repository.MemberRepository;
 import com.sideproject.fikabackend.global.jwt.JwtTokenProvider;
 import com.sideproject.fikabackend.global.jwt.TokenInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -52,8 +52,17 @@ public class MemberService {
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 
-        response.addHeader(JwtTokenProvider.ACCESSTOKEN_HEADER, tokenInfo.getGrantType() + " " + tokenInfo.getAccessToken());
-        response.addHeader(JwtTokenProvider.REFRESHTOKEN_HEADER, tokenInfo.getGrantType() + " " + tokenInfo.getRefreshToken());
+//        response.addHeader(JwtTokenProvider.ACCESSTOKEN_HEADER, tokenInfo.getGrantType() + " " + tokenInfo.getAccessToken());
+//        response.addHeader(JwtTokenProvider.REFRESHTOKEN_HEADER, tokenInfo.getGrantType() + " " + tokenInfo.getRefreshToken());
+        ResponseCookie cookie = ResponseCookie.from("AccessToken",tokenInfo.getAccessToken())
+                .maxAge(7*24*60*60)
+                .path("/")
+                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
+                .build();
+        response.setHeader("Set-Cookie", cookie.toString());
+
 
         return ResponseEntity.ok("로그인 성공");
     }

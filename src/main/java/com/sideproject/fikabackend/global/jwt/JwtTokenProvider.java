@@ -47,7 +47,7 @@ public class JwtTokenProvider {
 
 
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + 86400000);
+        Date accessTokenExpiresIn = new Date(now + 60*60);
         String accessToken = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setSubject(authentication.getName())
@@ -60,10 +60,12 @@ public class JwtTokenProvider {
         String refreshToken = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setExpiration(new Date(now + 86400000))
+                .setExpiration(new Date(now + 7*24*60*60))
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+
 
 
         return TokenInfo.builder()
@@ -74,10 +76,6 @@ public class JwtTokenProvider {
 
 
     }
-
-
-
-
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {

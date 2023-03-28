@@ -1,6 +1,8 @@
 package com.sideproject.fikabackend.domain.member.entity;
 
 import com.sideproject.fikabackend.domain.member.dto.SignUpReqDto;
+import com.sideproject.fikabackend.domain.social.kakao.dto.KakaoInfo;
+
 import com.sideproject.fikabackend.domain.status.entity.Status;
 import com.sideproject.fikabackend.domain.team.entity.Team;
 import com.sideproject.fikabackend.global.util.Timestamped;
@@ -25,28 +27,34 @@ public class Member extends Timestamped implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberNm;
 
-    @Column(nullable = true)
+    @Column
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
     @Column(nullable = false)
-    private String memberId;
+    @Enumerated(value = EnumType.STRING)
+    private SocialType socialType;
+
+    // 카카오에서는 email
     @Column(nullable = false)
+    private String memberId;
+
+
+    ////////////////////////////////////////////// 회원 가입 이후 받는 정보 ?
+    @Column
     private String pw;
 
-    @Column(nullable = false)
+    @Column
     private String userName;
 
-    @Column(nullable = false)
+    @Column
     private String nickName;
-
-    @Column(nullable = false)
+    @Column
     private String region;
 
-    @Column(nullable = false)
+    @Column
     private Long age;
 
-    ////////////////////////////////////////////// 회원 가입 이후 받는 정보
     @Column
     private String profileImg;
 
@@ -73,6 +81,8 @@ public class Member extends Timestamped implements UserDetails {
     @JoinColumn(name = "team_nm",nullable = true)
     private Team team;
 
+
+    // 일반 로그인
     public Member(SignUpReqDto signUpReqDto){
         this.memberId = signUpReqDto.getMemberId();
         this.pw = signUpReqDto.getPw();
@@ -80,6 +90,13 @@ public class Member extends Timestamped implements UserDetails {
         this.nickName = signUpReqDto.getNickName();
         this.region = signUpReqDto.getRegion();
         this.age = signUpReqDto.getAge();
+    }
+
+    // 카카오 로그인
+    public Member(KakaoInfo clientInfo) {
+        this.memberId = clientInfo.getKakaoAccount().getEmail();
+        this.userName = clientInfo.getKakaoAccount().getProfile().getNickname();
+        this.socialType = SocialType.KAKAO;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)

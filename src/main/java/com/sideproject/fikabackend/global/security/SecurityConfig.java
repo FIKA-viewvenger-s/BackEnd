@@ -40,9 +40,9 @@ public class SecurityConfig {
 
                 .antMatchers("/","/**","/h2-console/**").permitAll()
                 // 해당 API에 대해서는 모든 요청을 허가한다는 설정이다.
-                .antMatchers("/users/login").permitAll()
+                .antMatchers("/members/login").permitAll()
                 // 해당 API에 대해서는 Admin 권한이 있어야 요청할 수 있다는 설정이다.
-                .antMatchers("/users/test").hasRole("Admin")
+                .antMatchers("/members/test").hasRole("Admin")
                 .anyRequest().authenticated()
                 .and()
                  // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행하겠다는 설정이다.
