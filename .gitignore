@@ -20,6 +20,9 @@ bin/
 # application.properites #
 application.properties
 
+# application.yml #
+application.yml
+
 # build-gradle #
 build.gradle
 

@@ -65,27 +65,13 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
-<<<<<<< HEAD
+
         TokenInfo.builder()
                 .grantType("Bearer")
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
-=======
 
-
-<<<<<<< HEAD:src/main/java/com/sideproject/fikabackend/domain/security/JwtTokenProvider.java
-//        Map<String, Object> tokens = new HashMap<>();
-//        tokens.put("access",accessToken);
-//        tokens.put("refresh",refreshToken);
-//
-//        String test = Jwts.builder()
-//                .setHeaderParams(tokens)
-//                .compact();
->>>>>>> 4e871a5 (Fix: 로그인response 1차 완료)
-
-=======
->>>>>>> bd6226a (Fix: 디렉토리 정리):src/main/java/com/sideproject/fikabackend/global/jwt/JwtTokenProvider.java
         return TokenInfo.builder()
                 .grantType("Bearer")
                 .accessToken(accessToken)
@@ -94,10 +80,6 @@ public class JwtTokenProvider {
 
 
     }
-
-
-
-
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {

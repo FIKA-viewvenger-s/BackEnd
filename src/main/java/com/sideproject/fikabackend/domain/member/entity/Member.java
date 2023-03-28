@@ -1,6 +1,7 @@
 package com.sideproject.fikabackend.domain.member.entity;
 
 import com.sideproject.fikabackend.domain.member.dto.SignUpReqDto;
+import com.sideproject.fikabackend.domain.social.kakao.dto.KakaoInfo;
 import com.sideproject.fikabackend.domain.status.entity.Status;
 import com.sideproject.fikabackend.domain.team.entity.Team;
 import com.sideproject.fikabackend.global.util.Timestamped;
@@ -25,40 +26,35 @@ public class Member extends Timestamped implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberNm;
 
-    @Column(nullable = true)
+    @Column
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    private SocialType socialType;
+
+    // social login 에서는 email 정보
     @Column(nullable = false)
     private String memberId;
-    @Column(nullable = false)
-    private String pw;
+
 
     @Column(nullable = false)
     private String userName;
 
-    @Column(nullable = false)
+    @Column
     private String nickName;
 
-    @Column(nullable = false)
+    ////////////////////////////////////////////// 회원 가입 이후 받는 정보 ?
+    @Column
+    private String pw;
+
+    @Column
     private String region;
 
-<<<<<<< HEAD:src/main/java/com/sideproject/fikabackend/domain/user/entity/Member.java
-<<<<<<< HEAD:src/main/java/com/sideproject/fikabackend/domain/user/entity/User.java
-<<<<<<< HEAD
     @Column
-=======
-=======
-
->>>>>>> bd6226a (Fix: 디렉토리 정리):src/main/java/com/sideproject/fikabackend/domain/user/entity/Member.java
-    @Column(nullable = true)
->>>>>>> 4e871a5 (Fix: 로그인response 1차 완료)
-=======
-    @Column(nullable = false)
->>>>>>> fd45d75 (Add: 회원가입 로직 추가):src/main/java/com/sideproject/fikabackend/domain/member/entity/Member.java
     private Long age;
 
-    ////////////////////////////////////////////// 회원 가입 이후 받는 정보
     @Column
     private String profileImg;
 
@@ -85,6 +81,7 @@ public class Member extends Timestamped implements UserDetails {
     @JoinColumn(name = "team_nm",nullable = true)
     private Team team;
 
+    // 일반 로그인
     public Member(SignUpReqDto signUpReqDto){
         this.memberId = signUpReqDto.getMemberId();
         this.pw = signUpReqDto.getPw();
@@ -94,10 +91,16 @@ public class Member extends Timestamped implements UserDetails {
         this.age = signUpReqDto.getAge();
     }
 
+    // 카카오 로그인
+    public Member(KakaoInfo clientInfo) {
+        this.memberId = clientInfo.getKakaoAccount().getEmail();
+        this.userName = clientInfo.getKakaoAccount().getProfile().getNickname();
+        this.socialType = SocialType.KAKAO;
+    }
+
     @ElementCollection(fetch = FetchType.EAGER)
     //    @Builder.Default
     private List<String> roles = new ArrayList<>();
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
