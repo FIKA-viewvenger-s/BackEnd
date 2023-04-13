@@ -2,14 +2,20 @@ package com.sideproject.fikabackend.domain.social.kakao.service;
 
 
 import com.sideproject.fikabackend.domain.member.entity.Member;
+import com.sideproject.fikabackend.domain.member.repository.MemberRepository;
 import com.sideproject.fikabackend.domain.social.kakao.client.KakaoClient;
 import com.sideproject.fikabackend.domain.social.kakao.dto.KakaoInfo;
 import com.sideproject.fikabackend.domain.social.kakao.dto.KakaoToken;
-import com.sideproject.fikabackend.domain.social.kakao.repository.KakaoClientRepository;
 import com.sideproject.fikabackend.global.jwt.JwtTokenProvider;
+import com.sideproject.fikabackend.global.jwt.TokenInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +27,13 @@ import java.net.URI;
 public class KakaoService {
 
     private final KakaoClient client;
-    private final KakaoClientRepository kakaoClientRepository;
+    private final MemberRepository memberRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final JwtTokenProvider jwtTokenProvider;
+
 
 
     @Value("${kakao.auth-url}")
@@ -39,13 +51,39 @@ public class KakaoService {
     public KakaoInfo getInfo(final String code, HttpServletResponse response) {
 
         final KakaoToken token = getToken(code);
-        response.addHeader(JwtTokenProvider.ACCESSTOKEN_HEADER,token.getTokenType() + " " +  token.getAccessToken());
-        response.addHeader(JwtTokenProvider.REFRESHTOKEN_HEADER,token.getTokenType() + " " + token.getRefreshToken());
-        log.debug("token = {}", token);
         try {
             KakaoInfo clientInfo = client.getInfo(new URI(kakaoUserApiUrl), token.getTokenType() + " " + token.getAccessToken());
-            Member member = new Member(clientInfo);
-            kakaoClientRepository.save(member);
+            String password = clientInfo.getKakaoAccount().getEmail();
+            String memberId = clientInfo.getKakaoAccount().getEmail();
+            String nickname = clientInfo.getKakaoAccount().getProfile().getNickname();
+            String encodedPassword = passwordEncoder.encode(password);
+
+            Member kakaoMember = memberRepository.findByMemberId(memberId)
+                    .orElse(null);
+            if(kakaoMember == null){
+
+                Member members = new Member(memberId, nickname, encodedPassword);
+                memberRepository.save(members);
+            }
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberId, encodedPassword);
+
+            // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
+            // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+            // 3. 인증 정보를 기반으로 JWT 토큰 생성
+            TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+
+//        response.addHeader(JwtTokenProvider.ACCESSTOKEN_HEADER, tokenInfo.getGrantType() + " " + tokenInfo.getAccessToken());
+//        response.addHeader(JwtTokenProvider.REFRESHTOKEN_HEADER, tokenInfo.getGrantType() + " " + tokenInfo.getRefreshToken());
+            ResponseCookie cookie = ResponseCookie.from("AccessToken",tokenInfo.getAccessToken())
+                    .maxAge(7*24*60*60)
+                    .path("/")
+                    .secure(true)
+                    .sameSite("None")
+                    .httpOnly(true)
+                    .build();
+            response.setHeader("Set-Cookie", cookie.toString());
             return clientInfo;
         } catch (Exception e) {
             log.error("something error..", e);

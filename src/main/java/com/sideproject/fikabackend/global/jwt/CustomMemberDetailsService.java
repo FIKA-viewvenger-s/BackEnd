@@ -17,6 +17,12 @@ public class CustomMemberDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+//    @Override
+//    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
+//        return memberRepository.findByMemberId(memberId)
+//                .map(this::createMemberDetails)
+//                .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
+//    }
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
         return memberRepository.findByMemberId(memberId)

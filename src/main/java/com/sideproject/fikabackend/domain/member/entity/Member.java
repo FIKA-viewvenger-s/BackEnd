@@ -31,7 +31,7 @@ public class Member extends Timestamped implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
-    @Column(nullable = false)
+    @Column
     @Enumerated(value = EnumType.STRING)
     private SocialType socialType;
 
@@ -93,15 +93,23 @@ public class Member extends Timestamped implements UserDetails {
     }
 
     // 카카오 로그인
-    public Member(KakaoInfo clientInfo) {
-        this.memberId = clientInfo.getKakaoAccount().getEmail();
-        this.userName = clientInfo.getKakaoAccount().getProfile().getNickname();
-        this.socialType = SocialType.KAKAO;
+//    public Member(KakaoInfo clientInfo) {
+//        this.memberId = clientInfo.getKakaoAccount().getEmail();
+//        this.userName = clientInfo.getKakaoAccount().getProfile().getNickname();
+//        this.socialType = SocialType.KAKAO;
+//    }
+
+    public Member(String memberId, String nickname, String encodedPassword) {
+        this.memberId = memberId;
+        this.nickName = nickname;
+        this.pw = encodedPassword;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
     //    @Builder.Default
     private List<String> roles = new ArrayList<>();
+
+
 
 
     @Override

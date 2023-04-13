@@ -12,9 +12,12 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity //스프링 시큐리티 지원을 가능하게 함
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -22,6 +25,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        //cors 설정
+        http .cors().configurationSource(corsConfigurationSource());
+
         // h2 console 화면 사용을 위해 설정
         http.headers().frameOptions().disable();
         //csrf 미적용
@@ -49,7 +55,26 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+
     }
+
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true) ;
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedOrigin("http://localhost:3000"); // local 테스트 시
+        configuration.addAllowedOrigin("https://www.example.com"); // 배포 시
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.addExposedHeader("Authorization");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
