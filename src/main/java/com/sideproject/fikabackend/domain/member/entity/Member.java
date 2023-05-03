@@ -1,17 +1,17 @@
 package com.sideproject.fikabackend.domain.member.entity;
 
 import com.sideproject.fikabackend.domain.member.dto.SignUpReqDto;
-import com.sideproject.fikabackend.domain.social.kakao.dto.KakaoInfo;
 
-import com.sideproject.fikabackend.domain.status.entity.Status;
-import com.sideproject.fikabackend.domain.team.entity.Team;
 import com.sideproject.fikabackend.global.util.Timestamped;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,71 +25,35 @@ public class Member extends Timestamped implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberNm;
+    private Long mmbrId;
 
-    @Column
-    @Enumerated(value = EnumType.STRING)
-    private UserRole role;
-
-    @Column
+    @NotNull(message = "social must not be null")
     @Enumerated(value = EnumType.STRING)
     private SocialType socialType;
 
     // 카카오에서는 email
-    @Column(nullable = false)
-    private String memberId;
+    @NotNull(message = "member-email must not be null")
+    private String mmbrEmail;
 
+    @NotNull(message = "member-password must not be null")
+    private String mmbrPw;
 
-    ////////////////////////////////////////////// 회원 가입 이후 받는 정보 ?
-    @Column
-    private String pw;
+    @NotNull(message = "member-name must not be null")
+    private String mmbrNm;
 
-    @Column
-    private String userName;
-
-    @Column
+    @NotNull(message = "member-nickname must not be null")
     private String nickName;
-    @Column
-    private String region;
+    @NotNull(message = "member-img must not be null")
+    private String mmbrImg;
 
-    @Column
-    private Long age;
-
-    @Column
-    private String profileImg;
-
-    @Column
-    private Long mannerPnt;
-
-    @Column
-    private Long reCode;
-
-    @Column
-    private String position;
-
-    @Column
-    private String tier;
-
-    @Column
-    private String odds;
-
-    //스탯번호
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Status> status = new ArrayList<>();
-
-    @ManyToOne
-    @JoinColumn(name = "team_nm",nullable = true)
-    private Team team;
 
 
     // 일반 로그인
     public Member(SignUpReqDto signUpReqDto){
-        this.memberId = signUpReqDto.getMemberId();
-        this.pw = signUpReqDto.getPw();
-        this.userName = signUpReqDto.getUserName();
+        this.mmbrEmail = signUpReqDto.getMmbrEmail();
+        this.mmbrPw = signUpReqDto.getMmbrPw();
+        this.mmbrNm = signUpReqDto.getMmbrNm();
         this.nickName = signUpReqDto.getNickName();
-        this.region = signUpReqDto.getRegion();
-        this.age = signUpReqDto.getAge();
     }
 
     // 카카오 로그인
@@ -99,10 +63,10 @@ public class Member extends Timestamped implements UserDetails {
 //        this.socialType = SocialType.KAKAO;
 //    }
 
-    public Member(String memberId, String nickname, String encodedPassword) {
-        this.memberId = memberId;
+    public Member(String mmbrEmail, String nickname, String encodedPassword) {
+        this.mmbrEmail = mmbrEmail;
         this.nickName = nickname;
-        this.pw = encodedPassword;
+        this.mmbrPw = encodedPassword;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -121,12 +85,12 @@ public class Member extends Timestamped implements UserDetails {
 
     @Override
     public String getUsername() {
-        return memberId;
+        return mmbrEmail;
     }
 
     @Override
     public String getPassword() {
-        return pw;
+        return mmbrPw;
     }
 
     @Override

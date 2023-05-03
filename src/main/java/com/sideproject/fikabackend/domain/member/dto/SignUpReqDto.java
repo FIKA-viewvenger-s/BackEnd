@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class SignUpReqDto {
-    private String memberId;
-    private String pw;
-    private String userName;
+    private String mmbrEmail;
+    private String mmbrPw;
+    private String mmbrNm;
     private String nickName;
-    private String region;
-    private Long age;
 }
