@@ -24,8 +24,8 @@ public class CustomMemberDetailsService implements UserDetailsService {
 //                .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
 //    }
     @Override
-    public UserDetails loadUserByUsername(String mmbrEmail) throws UsernameNotFoundException {
-        return memberRepository.findBymmbrEmail(mmbrEmail)
+    public UserDetails loadUserByUsername(String memberEmail) throws UsernameNotFoundException {
+        return memberRepository.findByMemberEmail(memberEmail)
                 .map(this::createMemberDetails)
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
     }
@@ -33,8 +33,8 @@ public class CustomMemberDetailsService implements UserDetailsService {
     // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
     private UserDetails createMemberDetails(com.sideproject.fikabackend.domain.member.entity.Member member) {
         return User.builder()
-                .username(member.getMmbrEmail())
-                .password(passwordEncoder.encode(member.getMmbrPw()))
+                .username(member.getMemberEmail())
+                .password(passwordEncoder.encode(member.getMemberPw()))
                 .roles(member.getRoles().toArray(new String[0]))
                 .build();
     }

@@ -11,7 +11,7 @@ public class AssemblyMember extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long AssmMmbrId;
+    private Long AssmmemberId;
 
     @ManyToOne
     @JoinColumn

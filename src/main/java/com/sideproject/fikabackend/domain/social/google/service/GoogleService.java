@@ -56,7 +56,7 @@ public class GoogleService {
             GoogleAccount clientInfo = googleClient.getInfo(token.getIdToken());
             String username = clientInfo.getEmail();
             String password = passwordEncoder.encode(username + "임의의 난수");
-            Optional<Member> byMemberId = memberRepository.findBymmbrEmail(username);
+            Optional<Member> byMemberId = memberRepository.findByMemberEmail(username);
             if (byMemberId.isEmpty()) {
 //                password = passwordEncoder.encode(username + "임의의 난수");
                 Member member = new Member(clientInfo);

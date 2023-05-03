@@ -25,7 +25,7 @@ public class Member extends Timestamped implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mmbrId;
+    private Long memberId;
 
     @NotNull(message = "social must not be null")
     @Enumerated(value = EnumType.STRING)
@@ -33,26 +33,26 @@ public class Member extends Timestamped implements UserDetails {
 
     // 카카오에서는 email
     @NotNull(message = "member-email must not be null")
-    private String mmbrEmail;
+    private String memberEmail;
 
     @NotNull(message = "member-password must not be null")
-    private String mmbrPw;
+    private String memberPw;
 
     @NotNull(message = "member-name must not be null")
-    private String mmbrNm;
+    private String memberNm;
 
     @NotNull(message = "member-nickname must not be null")
     private String nickName;
     @NotNull(message = "member-img must not be null")
-    private String mmbrImg;
+    private String memberImg;
 
 
 
     // 일반 로그인
     public Member(SignUpReqDto signUpReqDto){
-        this.mmbrEmail = signUpReqDto.getMmbrEmail();
-        this.mmbrPw = signUpReqDto.getMmbrPw();
-        this.mmbrNm = signUpReqDto.getMmbrNm();
+        this.memberEmail = signUpReqDto.getMemberEmail();
+        this.memberPw = signUpReqDto.getMemberPw();
+        this.memberNm = signUpReqDto.getMemberNm();
         this.nickName = signUpReqDto.getNickName();
     }
 
@@ -63,18 +63,18 @@ public class Member extends Timestamped implements UserDetails {
 //        this.socialType = SocialType.KAKAO;
 //    }
 
-    public Member(String mmbrEmail, String nickname, String encodedPassword) {
-        this.mmbrEmail = mmbrEmail;
+    public Member(String memberEmail, String nickname, String encodedPassword) {
+        this.memberEmail = memberEmail;
         this.nickName = nickname;
-        this.mmbrPw = encodedPassword;
+        this.memberPw = encodedPassword;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
     //    @Builder.Default
     private List<String> roles = new ArrayList<>();
     public Member(GoogleAccount clientInfo) {
-        this.mmbrEmail = clientInfo.getEmail();
-        this.mmbrNm = clientInfo.getName();
+        this.memberEmail = clientInfo.getEmail();
+        this.memberNm = clientInfo.getName();
     }
 
     @Override
@@ -86,12 +86,12 @@ public class Member extends Timestamped implements UserDetails {
 
     @Override
     public String getUsername() {
-        return mmbrEmail;
+        return memberEmail;
     }
 
     @Override
     public String getPassword() {
-        return mmbrPw;
+        return memberPw;
     }
 
     @Override

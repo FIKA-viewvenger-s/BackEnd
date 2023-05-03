@@ -53,17 +53,17 @@ public class KakaoService {
         try {
             KakaoInfo clientInfo = client.getInfo(new URI(kakaoUserApiUrl), token.getTokenType() + " " + token.getAccessToken());
             String password = clientInfo.getKakaoAccount().getEmail();
-            String mmbrEmail = clientInfo.getKakaoAccount().getEmail();
+            String memberEmail = clientInfo.getKakaoAccount().getEmail();
             String nickname = clientInfo.getKakaoAccount().getProfile().getNickname();
             String encodedPassword = passwordEncoder.encode(password);
 
-            Member kakaoMember = memberRepository.findBymmbrEmail(mmbrEmail)
+            Member kakaoMember = memberRepository.findByMemberEmail(memberEmail)
                     .orElse(null);
             if(kakaoMember == null){
-                Member members = new Member(mmbrEmail, nickname, encodedPassword);
+                Member members = new Member(memberEmail, nickname, encodedPassword);
                 memberRepository.save(members);
             }
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(mmbrEmail, encodedPassword);
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberEmail, encodedPassword);
 
             // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
             // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
