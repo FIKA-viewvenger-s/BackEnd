@@ -1,7 +1,7 @@
 package com.sideproject.fikabackend.domain.member.entity;
 
 import com.sideproject.fikabackend.domain.member.dto.SignUpReqDto;
-
+import com.sideproject.fikabackend.domain.social.google.dto.GoogleAccount;
 import com.sideproject.fikabackend.global.util.Timestamped;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -72,9 +72,10 @@ public class Member extends Timestamped implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     //    @Builder.Default
     private List<String> roles = new ArrayList<>();
-
-
-
+    public Member(GoogleAccount clientInfo) {
+        this.mmbrEmail = clientInfo.getEmail();
+        this.mmbrNm = clientInfo.getName();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

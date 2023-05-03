@@ -2,7 +2,6 @@ package com.sideproject.fikabackend.domain.social.google.client;
 
 import com.sideproject.fikabackend.domain.social.google.dto.GoogleAccount;
 import com.sideproject.fikabackend.domain.social.google.dto.GoogleToken;
-import com.sideproject.fikabackend.domain.social.kakao.config.KakaoFeignConfiguration;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,4 +21,8 @@ public interface GoogleClient {
 
     @GetMapping("/tokeninfo")
     GoogleAccount getInfo(@RequestParam("id_token") String idToken);
+
+    @PostMapping("/revoke")
+    String revokeToken(@RequestParam("token") String token);
+
 }

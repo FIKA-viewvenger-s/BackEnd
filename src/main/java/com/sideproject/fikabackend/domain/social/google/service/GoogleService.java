@@ -1,32 +1,48 @@
 package com.sideproject.fikabackend.domain.social.google.service;
 
+import com.sideproject.fikabackend.domain.member.entity.Member;
+import com.sideproject.fikabackend.domain.member.repository.MemberRepository;
 import com.sideproject.fikabackend.domain.social.google.client.GoogleClient;
 import com.sideproject.fikabackend.domain.social.google.dto.GoogleAccount;
 import com.sideproject.fikabackend.domain.social.google.dto.GoogleToken;
 import com.sideproject.fikabackend.global.jwt.JwtTokenProvider;
+import com.sideproject.fikabackend.global.jwt.TokenInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @Slf4j
 @Service
 public class GoogleService {
 
     static final String GRANT_TYPE = "authorization_code";
-
-    @Value("${api.google.client_id}")
-    private String clientId;
-    @Value("${api.google.client_secret}")
-    private String clientSecret;
-    @Value("${api.google.redirect_uri}")
-    private String redirectUri;
-
+    private final String clientId;
+    private final String clientSecret;
+    private final String redirectUri;
     private final GoogleClient googleClient;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final MemberRepository memberRepository;
 
-    public GoogleService(GoogleClient googleClient) {
+    public GoogleService(@Value("${api.google.client_id}") String clientId,
+                         @Value("${api.google.client_secret}") String clientSecret,
+                         @Value("${api.google.redirect_uri}") String redirectUri,
+                         GoogleClient googleClient, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, MemberRepository memberRepository) {
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.redirectUri = redirectUri;
         this.googleClient = googleClient;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.memberRepository = memberRepository;
     }
 
     public GoogleAccount getInfo(final String code, HttpServletResponse response) {
@@ -37,7 +53,27 @@ public class GoogleService {
         response.addHeader(JwtTokenProvider.REFRESHTOKEN_HEADER,token.getTokenType() + " " + token.getRefreshToken());
 
         try {
-            return googleClient.getInfo(token.getIdToken());
+            GoogleAccount clientInfo = googleClient.getInfo(token.getIdToken());
+            String username = clientInfo.getEmail();
+            String password = passwordEncoder.encode(username + "임의의 난수");
+            Optional<Member> byMemberId = memberRepository.findBymmbrEmail(username);
+            if (byMemberId.isEmpty()) {
+//                password = passwordEncoder.encode(username + "임의의 난수");
+                Member member = new Member(clientInfo);
+                memberRepository.save(member);
+            }
+            Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+            TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+            ResponseCookie cookie = ResponseCookie.from("AccessToken",tokenInfo.getAccessToken())
+                    .maxAge(7*24*60*60)
+                    .path("/")
+                    .secure(true)
+                    .sameSite("None")
+                    .httpOnly(true)
+                    .build();
+            response.setHeader("Set-Cookie", cookie.toString());
+
+            return clientInfo;
         } catch (Exception e) {
             log.error("google getInfo() error ", e);
             e.printStackTrace();
@@ -53,5 +89,10 @@ public class GoogleService {
             e.printStackTrace();
             return new GoogleToken();
         }
+    }
+
+    public ResponseEntity<String> revokeToken(String token) {
+        String result = googleClient.revokeToken(token);
+        return ResponseEntity.ok(result);
     }
 }
