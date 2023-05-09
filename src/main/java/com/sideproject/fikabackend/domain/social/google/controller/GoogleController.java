@@ -2,6 +2,7 @@ package com.sideproject.fikabackend.domain.social.google.controller;
 
 import com.sideproject.fikabackend.domain.social.google.dto.GoogleAccount;
 import com.sideproject.fikabackend.domain.social.google.service.GoogleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
+@Slf4j
 @RestController
 public class GoogleController {
 
@@ -26,6 +28,7 @@ public class GoogleController {
      */
     @GetMapping("/member/google")
     public GoogleAccount getGoogleAccount(@RequestParam("code") String code, HttpServletResponse response) {
+        log.info("google login controller enter : {}", code);
         return googleService.getInfo(code, response);
     }
 

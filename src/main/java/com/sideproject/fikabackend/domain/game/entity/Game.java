@@ -1,6 +1,4 @@
-package com.sideproject.fikabackend.domain.football.entity;
-
-import com.sideproject.fikabackend.domain.football.entity.FbGameType;
+package com.sideproject.fikabackend.domain.game.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,14 +7,14 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Football {
+public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fbId;
 
     @NotNull(message = "FootballType must not be null")
-    private FbGameType fbTp;
+    private GameType gameTp;
 
     @NotNull(message = "Football-League must not be null")
     private String fbLeague;

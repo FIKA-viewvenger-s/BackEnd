@@ -1,7 +1,7 @@
 package com.sideproject.fikabackend.domain.assembly.entity;
 
 import com.sideproject.fikabackend.domain.address.entity.Address;
-import com.sideproject.fikabackend.domain.football.entity.Football;
+import com.sideproject.fikabackend.domain.game.entity.Game;
 import com.sideproject.fikabackend.domain.member.entity.Member;
 import com.sideproject.fikabackend.global.util.Timestamped;
 
@@ -31,7 +31,7 @@ public class Assembly extends Timestamped {
 
     @ManyToOne
     @JoinColumn(name="GAME_ID")
-    private Football football;
+    private Game football;
 
 
 }

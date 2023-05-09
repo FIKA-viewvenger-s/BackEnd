@@ -1,6 +1,6 @@
-package com.sideproject.fikabackend.domain.football.entity;
+package com.sideproject.fikabackend.domain.game.entity;
 
-public enum FbGameType {
+public enum GameType {
 
     OUTBOUND, INBOUND
 
