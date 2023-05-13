@@ -11,13 +11,16 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Assembly extends Timestamped {
 
+    /**모임 PK**/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long assmId;
 
+    /**모임 제목**/
     @NotNull(message = "assemblyTitle must not be null")
     private String assmTitle;
 
+    /**모임 날짜**/
     @NotNull(message = "aeemblyDate must not be null")
     private String assmDt;
 

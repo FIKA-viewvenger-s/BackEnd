@@ -14,11 +14,11 @@ public class AssemblyMember extends Timestamped {
     private Long AssmmemberId;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name="ASSM_ID")
     private Assembly assembly;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name="MEMBER_ID")
     private Member member;
 
 

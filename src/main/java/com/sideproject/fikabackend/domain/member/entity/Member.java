@@ -1,5 +1,8 @@
 package com.sideproject.fikabackend.domain.member.entity;
 
+import com.sideproject.fikabackend.domain.address.entity.Address;
+import com.sideproject.fikabackend.domain.assembly.entity.Assembly;
+import com.sideproject.fikabackend.domain.game.entity.Game;
 import com.sideproject.fikabackend.domain.member.dto.SignUpReqDto;
 import com.sideproject.fikabackend.domain.social.google.dto.GoogleAccount;
 import com.sideproject.fikabackend.global.util.Timestamped;
@@ -23,32 +26,48 @@ import java.util.stream.Collectors;
 @Entity
 public class Member extends Timestamped implements UserDetails {
 
+    /**유저 PK**/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
+    /**소셜로그인 타입**/
     @NotNull(message = "social must not be null")
     @Enumerated(value = EnumType.STRING)
     private SocialType socialType;
 
     // 카카오에서는 email
+    /** 이메일(아이디)**/
     @NotNull(message = "member-email must not be null")
     private String memberEmail;
 
+    /**유저 비밀번호**/
     @NotNull(message = "member-password must not be null")
     private String memberPw;
 
+    /**유저 이름**/
     @NotNull(message = "member-name must not be null")
     private String memberNm;
 
+    /**유저 닉네임**/
     @NotNull(message = "member-nickname must not be null")
     private String nickName;
+
+    /**유저 프로필 이미지**/
     @NotNull(message = "member-img must not be null")
     private String memberImg;
 
+    @ManyToOne
+    @JoinColumn(name="ADDR_ID")
+    private Address address;
+
+    @ManyToOne
+    @JoinColumn(name="ASSM_ID")
+    private Assembly assembly;
 
 
-    // 일반 로그인
+
+    /**일반 로그인**/
     public Member(SignUpReqDto signUpReqDto){
         this.memberEmail = signUpReqDto.getMemberEmail();
         this.memberPw = signUpReqDto.getMemberPw();
@@ -56,13 +75,8 @@ public class Member extends Timestamped implements UserDetails {
         this.nickName = signUpReqDto.getNickName();
     }
 
-    // 카카오 로그인
-//    public Member(KakaoInfo clientInfo) {
-//        this.memberId = clientInfo.getKakaoAccount().getEmail();
-//        this.userName = clientInfo.getKakaoAccount().getProfile().getNickname();
-//        this.socialType = SocialType.KAKAO;
-//    }
 
+    /**소셜 로그인**/
     public Member(String memberEmail, String nickname, String encodedPassword) {
         this.memberEmail = memberEmail;
         this.nickName = nickname;
