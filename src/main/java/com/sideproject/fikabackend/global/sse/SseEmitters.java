@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -26,10 +27,10 @@ public class SseEmitters {
      *     기존의 Emitter 객체를 삭제해주어야 한다.
      *     이때 onCompletion 이라는 콜백 메서드를 사용한다.
      * </pre>
+     *
      * @param emitter 새로 생성할 emitter 객체
-     * @return 새로 생성된 SseEmitter 객체
      */
-    SseEmitter add(SseEmitter emitter) {
+    void add(SseEmitter emitter) {
         this.emitters.add(emitter);
         log.info("new emitter added: {}", emitter);
         log.info("emitter list size: {}", emitters.size());
@@ -41,7 +42,18 @@ public class SseEmitters {
             log.info("onTimeout callback");
             emitter.complete();
         });
+    }
 
-        return emitter;
+    void updateScore() {
+        // TODO: 크롤링 로직 추가, 기존 스코어와 크롤링 스코어 비교 로직 추가
+        emitters.forEach(emitter -> {
+            try {
+                emitter.send(SseEmitter.event()
+                        .name("football")
+                        .data("update score"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }
