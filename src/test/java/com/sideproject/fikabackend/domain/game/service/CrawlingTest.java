@@ -5,6 +5,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.Test;
+import org.springframework.expression.ParseException;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,14 +18,14 @@ class CrawlingTest {
 
 
     @Test
-    void fotmobTest() throws Exception {
+    void fotmobTest() throws ParseException {
 
         try {
 
             String result = "";
 
-            URL url = new URL("https://www.fotmob.com/api/matches?date="+date);
-            TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+            URL url = new URL("https://www.fotmob.com/api/matches?date=" + date + "&timezone=Asia%2FSeoul&ccode3=KOR");
+
             BufferedReader bf;
 
 
@@ -36,20 +37,22 @@ class CrawlingTest {
             // String 값을 JSON 형태로 추출하기 위해 사용하는 라이브러리
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
-            JSONArray addResult = (JSONArray) jsonObject.get("leagues");
+            JSONArray leagues = (JSONArray) jsonObject.get("leagues");
+            for(int i =0; i < leagues.size(); i++){
+                JSONObject obj = (JSONObject) leagues.get(i);
+                System.out.println("나라: " + obj.get("ccode"));
+                System.out.println("리그: " + obj.get("name"));
+                JSONArray matches = (JSONArray) obj.get("matches");
 
-            JSONObject england = (JSONObject) addResult.get(0);
+                for(int j = 0; j < matches.size(); j++){
+                    JSONObject obj2 = (JSONObject) matches.get(j);
+                    System.out.println("시간: " + obj2.get("time"));
+                    System.out.println("홈팀: " + obj2.get("home"));
+                    System.out.println("어웨이팀: " + obj2.get("away"));
+                }
 
-            String country = england.get("ccode").toString();
-            String league = england.get("name").toString();
-            String match = england.get("matches").toString();
 
-            System.out.println("***************************");
-            System.out.println("***************************");
-            System.out.println(country);
-            System.out.println(league);
-            System.out.println(match);
-
+            }
 
 
         } catch (Exception e) {
