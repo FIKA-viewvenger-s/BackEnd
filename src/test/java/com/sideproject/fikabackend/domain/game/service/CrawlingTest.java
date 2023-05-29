@@ -38,14 +38,14 @@ class CrawlingTest {
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
             JSONArray leagues = (JSONArray) jsonObject.get("leagues");
-            for(int i =0; i < leagues.size(); i++){
-                JSONObject obj = (JSONObject) leagues.get(i);
+            for (Object league : leagues) {
+                JSONObject obj = (JSONObject) league;
                 System.out.println("나라: " + obj.get("ccode"));
                 System.out.println("리그: " + obj.get("name"));
                 JSONArray matches = (JSONArray) obj.get("matches");
 
-                for(int j = 0; j < matches.size(); j++){
-                    JSONObject obj2 = (JSONObject) matches.get(j);
+                for (Object match : matches) {
+                    JSONObject obj2 = (JSONObject) match;
                     System.out.println("시간: " + obj2.get("time"));
                     System.out.println("홈팀: " + obj2.get("home"));
                     System.out.println("어웨이팀: " + obj2.get("away"));
