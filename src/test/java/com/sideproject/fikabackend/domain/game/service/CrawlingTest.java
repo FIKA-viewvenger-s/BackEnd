@@ -62,28 +62,43 @@ class CrawlingTest {
                     JSONObject statusObj = (JSONObject) obj2.get("status");
 
                     homeTeamNm = (String) homeObj.get("name");
-                    homeTeamSc = (String) homeObj.get("score");
+                    homeTeamSc = homeObj.get("score").toString();
                     awayTeamNm = (String) awayObj.get("name");
-                    awayTeamSc = (String) homeObj.get("score");
+                    awayTeamSc = homeObj.get("score").toString();
 
-//                    String start = (String) statusObj.get("finished");
-//                    String finish = (String) statusObj.get("started");
-//                    String cancel = (String) statusObj.get("cancelled");
-//
-//
-//                    if(start.equals("true") && finish.equals("true")){
-//                        status = "경기종료";
-//                    } else {
-//                        status = "비정상종료";
-//                    }
+                    String cancel = statusObj.get("cancelled").toString();
+                    String start = statusObj.get("started").toString();
+                    String finish = statusObj.get("finished").toString();
+
+
+                    if(start.equals("true") && finish.equals("true") && cancel.equals("false")){
+                        status = "finished";
+                    } else if(finish.equals("true") && cancel.equals("true") && start.equals("false")){
+                        status = "cancelled";
+                    } else if(start.equals("true") && finish.equals("false") && cancel.equals("false")){
+                        status = "started";
+                    } else{
+                        status = "비정상종료";
+                    }
+
+                    String gam =gameTime.replaceAll("[^0-9]","");
+                    String year = gam.substring(4, 8);
+                    String month = gam.substring(2, 4);
+                    String day = gam.substring(0, 2);
+                    String hour =  gam.substring(8, 10);
+                    String second = gam.substring(10, 12);
+
+
                     System.out.println("나라: " + nation);
                     System.out.println("리그: " + league);
                     System.out.println("게임시간: " + gameTime);
+                    System.out.println(year + "년 " + month + "월 " + day + "일 " + hour + "시" + second + "분" );
                     System.out.println("홈팀: " + homeTeamNm);
                     System.out.println("홈팀스코어: " + homeTeamSc);
                     System.out.println("어웨이팀: " + awayTeamNm);
                     System.out.println("어웨이팀 스코어: " + awayTeamSc);
-//                    System.out.println("경기상태: " + status);
+                    System.out.println("경기상태: " + status);
+
 
 
                 }
@@ -94,6 +109,7 @@ class CrawlingTest {
 
         } catch (Exception e) {
             System.out.println("잘못된 접근");
+            e.printStackTrace();
             throw new RuntimeException();
         }
         System.out.println("정상종료");
