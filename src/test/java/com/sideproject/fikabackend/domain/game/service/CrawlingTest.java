@@ -33,22 +33,59 @@ class CrawlingTest {
 
             result = bf.readLine();
 
+            String nation;
+            String league;
+            String gameTime;
+            String homeTeamNm;
+            String homeTeamSc;
+            String awayTeamNm;
+            String awayTeamSc;
+            String status;
 
-            // String 값을 JSON 형태로 추출하기 위해 사용하는 라이브러리
+
+
+                    // String 값을 JSON 형태로 추출하기 위해 사용하는 라이브러리
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
             JSONArray leagues = (JSONArray) jsonObject.get("leagues");
-            for (Object league : leagues) {
-                JSONObject obj = (JSONObject) league;
-                System.out.println("나라: " + obj.get("ccode"));
-                System.out.println("리그: " + obj.get("name"));
-                JSONArray matches = (JSONArray) obj.get("matches");
+            for (Object leagueObj : leagues) {
+                JSONObject obj = (JSONObject) leagueObj;
+                nation = (String) obj.get("ccode");
+                league = (String) obj.get("name");
 
+                JSONArray matches = (JSONArray) obj.get("matches");
                 for (Object match : matches) {
                     JSONObject obj2 = (JSONObject) match;
-                    System.out.println("시간: " + obj2.get("time"));
-                    System.out.println("홈팀: " + obj2.get("home"));
-                    System.out.println("어웨이팀: " + obj2.get("away"));
+                    gameTime = (String) obj2.get("time");
+                    JSONObject homeObj = (JSONObject) obj2.get("home");
+                    JSONObject awayObj = (JSONObject) obj2.get("away");
+                    JSONObject statusObj = (JSONObject) obj2.get("status");
+
+                    homeTeamNm = (String) homeObj.get("name");
+                    homeTeamSc = (String) homeObj.get("score");
+                    awayTeamNm = (String) awayObj.get("name");
+                    awayTeamSc = (String) homeObj.get("score");
+
+//                    String start = (String) statusObj.get("finished");
+//                    String finish = (String) statusObj.get("started");
+//                    String cancel = (String) statusObj.get("cancelled");
+//
+//
+//                    if(start.equals("true") && finish.equals("true")){
+//                        status = "경기종료";
+//                    } else {
+//                        status = "비정상종료";
+//                    }
+                    System.out.println("나라: " + nation);
+                    System.out.println("리그: " + league);
+                    System.out.println("게임시간: " + gameTime);
+                    System.out.println("홈팀: " + homeTeamNm);
+                    System.out.println("홈팀스코어: " + homeTeamSc);
+                    System.out.println("어웨이팀: " + awayTeamNm);
+                    System.out.println("어웨이팀 스코어: " + awayTeamSc);
+//                    System.out.println("경기상태: " + status);
+
+
                 }
 
 
