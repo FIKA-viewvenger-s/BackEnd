@@ -44,13 +44,17 @@ public class SseEmitters {
         });
     }
 
+    // 1분마다
     void updateScore() {
+        // fotmob api
+        // 기존 데이터랑 비교
+        // 다른 경우 아래 로직 실행
         // TODO: 크롤링 로직 추가, 기존 스코어와 크롤링 스코어 비교 로직 추가
         emitters.forEach(emitter -> {
             try {
                 emitter.send(SseEmitter.event()
                         .name("football")
-                        .data("update score"));
+                        .data("update score")); // 변경된 게임 정보
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

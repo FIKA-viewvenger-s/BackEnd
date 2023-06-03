@@ -2,6 +2,7 @@ package com.sideproject.fikabackend.domain.social.google.service;
 
 import com.sideproject.fikabackend.domain.member.entity.Member;
 import com.sideproject.fikabackend.domain.member.repository.MemberRepository;
+import com.sideproject.fikabackend.domain.social.google.client.GoogleAccountsClient;
 import com.sideproject.fikabackend.domain.social.google.client.GoogleClient;
 import com.sideproject.fikabackend.domain.social.google.dto.GoogleAccount;
 import com.sideproject.fikabackend.domain.social.google.dto.GoogleToken;
@@ -28,6 +29,7 @@ public class GoogleService {
     private final String clientSecret;
     private final String redirectUri;
     private final GoogleClient googleClient;
+    private final GoogleAccountsClient googleAccountsClient;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
@@ -35,14 +37,21 @@ public class GoogleService {
     public GoogleService(@Value("${api.google.client_id}") String clientId,
                          @Value("${api.google.client_secret}") String clientSecret,
                          @Value("${api.google.redirect_uri}") String redirectUri,
-                         GoogleClient googleClient, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, MemberRepository memberRepository) {
+                         GoogleClient googleClient, GoogleAccountsClient googleAccountsClient, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, MemberRepository memberRepository) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.redirectUri = redirectUri;
         this.googleClient = googleClient;
+        this.googleAccountsClient = googleAccountsClient;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.memberRepository = memberRepository;
+    }
+
+    public String getAuthCode() {
+//        final String responseType = "code";
+//        googleAccountsClient.getAuthCode(clientId, redirectUri, responseType, )
+        return null;
     }
 
     public GoogleAccount getInfo(final String code, HttpServletResponse response) {
