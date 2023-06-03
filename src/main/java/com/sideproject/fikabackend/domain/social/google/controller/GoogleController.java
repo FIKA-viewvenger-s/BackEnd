@@ -20,6 +20,10 @@ public class GoogleController {
         this.googleService = googleService;
     }
 
+    @GetMapping("/member/google/auth")
+    public String getAuthCode() {
+        return googleService.getAuthCode();
+    }
     /**
      * Authentication code 를 전달 받는 api
      * @param code 인증코드

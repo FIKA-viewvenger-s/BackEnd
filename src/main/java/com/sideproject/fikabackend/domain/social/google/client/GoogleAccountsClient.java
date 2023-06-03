@@ -12,5 +12,6 @@ public interface GoogleAccountsClient {
                        @RequestParam("redirect_uri") String redirectUri,
                        @RequestParam("response_type") String responseType,
                        @RequestParam("scope") String scope,
-                       @RequestParam("access_type") String accessType);
+                       @RequestParam("access_type") String accessType,
+                       @RequestParam("prompt") String prompt);
 }

@@ -49,9 +49,11 @@ public class GoogleService {
     }
 
     public String getAuthCode() {
-//        final String responseType = "code";
-//        googleAccountsClient.getAuthCode(clientId, redirectUri, responseType, )
-        return null;
+        final String responseType = "code";
+        final String scope = "email profile openid";
+        final String accessType = "offline";
+        final String prompt = "consent";
+        return googleAccountsClient.getAuthCode(clientId, redirectUri, responseType, scope, accessType, prompt);
     }
 
     public GoogleAccount getInfo(final String code, HttpServletResponse response) {

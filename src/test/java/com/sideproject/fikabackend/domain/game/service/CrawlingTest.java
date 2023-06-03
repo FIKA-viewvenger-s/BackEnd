@@ -100,7 +100,6 @@ class CrawlingTest {
                     System.out.println("경기상태: " + status);
 
 
-
                 }
 
 
