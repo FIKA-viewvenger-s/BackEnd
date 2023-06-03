@@ -88,7 +88,6 @@ class CrawlingTest {
                     String hour =  gam.substring(8, 10);
                     String second = gam.substring(10, 12);
 
-
                     System.out.println("나라: " + nation);
                     System.out.println("리그: " + league);
                     System.out.println("게임시간: " + gameTime);

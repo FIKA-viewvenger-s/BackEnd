@@ -50,7 +50,7 @@ public class GoogleService {
 
     public String getAuthCode() {
         final String responseType = "code";
-        final String scope = "email profile openid";
+        final String scope = "email%20profile%20openid";
         final String accessType = "offline";
         final String prompt = "consent";
         return googleAccountsClient.getAuthCode(clientId, redirectUri, responseType, scope, accessType, prompt);
