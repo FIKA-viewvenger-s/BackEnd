@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.social.kakao.config;
+package com.sideproject.fikabackend.domain.member.social.kakao.config;
 
 import feign.Client;
 import org.springframework.context.annotation.Bean;

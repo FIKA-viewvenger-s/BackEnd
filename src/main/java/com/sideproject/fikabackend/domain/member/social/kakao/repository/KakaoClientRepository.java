@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.social.kakao.repository;
+package com.sideproject.fikabackend.domain.member.social.kakao.repository;
 
 
 import com.sideproject.fikabackend.domain.member.entity.Member;

@@ -44,8 +44,6 @@ public class JwtTokenProvider {
 
         long now = (new Date()).getTime();
 
-
-
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + 60*60);
         String accessToken = Jwts.builder()
@@ -73,8 +71,6 @@ public class JwtTokenProvider {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
-
-
     }
 
     // JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드

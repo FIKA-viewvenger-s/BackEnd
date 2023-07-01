@@ -1,10 +1,10 @@
-package com.sideproject.fikabackend.domain.social.google.service;
+package com.sideproject.fikabackend.domain.member.social.google.service;
 
 import com.sideproject.fikabackend.domain.member.entity.Member;
 import com.sideproject.fikabackend.domain.member.repository.MemberRepository;
-import com.sideproject.fikabackend.domain.social.google.client.GoogleClient;
-import com.sideproject.fikabackend.domain.social.google.dto.GoogleAccount;
-import com.sideproject.fikabackend.domain.social.google.dto.GoogleToken;
+import com.sideproject.fikabackend.domain.member.social.google.client.GoogleClient;
+import com.sideproject.fikabackend.domain.member.social.google.dto.GoogleAccount;
+import com.sideproject.fikabackend.domain.member.social.google.dto.GoogleToken;
 import com.sideproject.fikabackend.global.jwt.JwtTokenProvider;
 import com.sideproject.fikabackend.global.jwt.TokenInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,6 @@ public class GoogleService {
             String password = passwordEncoder.encode(username + "임의의 난수");
             Optional<Member> byMemberId = memberRepository.findByMemberEmail(username);
             if (byMemberId.isEmpty()) {
-//                password = passwordEncoder.encode(username + "임의의 난수");
                 Member member = new Member(clientInfo);
                 memberRepository.save(member);
             }

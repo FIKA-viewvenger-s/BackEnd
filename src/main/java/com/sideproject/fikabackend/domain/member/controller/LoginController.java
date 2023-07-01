@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.social.google.controller;
+package com.sideproject.fikabackend.domain.member.controller;
 
 import com.sideproject.fikabackend.domain.member.entity.SocialType;
 import io.swagger.v3.oas.annotations.Operation;

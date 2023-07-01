@@ -1,7 +1,7 @@
-package com.sideproject.fikabackend.domain.social.google.client;
+package com.sideproject.fikabackend.domain.member.social.google.client;
 
-import com.sideproject.fikabackend.domain.social.google.dto.GoogleAccount;
-import com.sideproject.fikabackend.domain.social.google.dto.GoogleToken;
+import com.sideproject.fikabackend.domain.member.social.google.dto.GoogleAccount;
+import com.sideproject.fikabackend.domain.member.social.google.dto.GoogleToken;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

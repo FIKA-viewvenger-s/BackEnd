@@ -1,9 +1,9 @@
-package com.sideproject.fikabackend.domain.social.kakao.client;
+package com.sideproject.fikabackend.domain.member.social.kakao.client;
 
 
-import com.sideproject.fikabackend.domain.social.kakao.config.KakaoFeignConfiguration;
-import com.sideproject.fikabackend.domain.social.kakao.dto.KakaoInfo;
-import com.sideproject.fikabackend.domain.social.kakao.dto.KakaoToken;
+import com.sideproject.fikabackend.domain.member.social.kakao.dto.KakaoInfo;
+import com.sideproject.fikabackend.domain.member.social.kakao.dto.KakaoToken;
+import com.sideproject.fikabackend.domain.member.social.kakao.config.KakaoFeignConfiguration;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
