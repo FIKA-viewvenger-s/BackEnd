@@ -48,10 +48,6 @@ public class GoogleService {
     public GoogleAccount getInfo(final String code, HttpServletResponse response) {
         final GoogleToken token = getToken(code);
         log.info("토큰 정보 : {}", token.toString());
-
-        response.addHeader(JwtTokenProvider.ACCESSTOKEN_HEADER,token.getTokenType() + " " +  token.getAccessToken());
-        response.addHeader(JwtTokenProvider.REFRESHTOKEN_HEADER,token.getTokenType() + " " + token.getRefreshToken());
-
         try {
             GoogleAccount clientInfo = googleClient.getInfo(token.getIdToken());
             String username = clientInfo.getEmail();

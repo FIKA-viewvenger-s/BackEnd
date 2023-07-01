@@ -23,9 +23,6 @@ application.properties
 # application.yml #
 application.yml
 
-# build-gradle #
-build.gradle
-
 ### IntelliJ IDEA ###
 .idea
 *.iws

@@ -84,7 +84,6 @@ public class Member extends Timestamped implements UserDetails {
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
-    //    @Builder.Default
     private List<String> roles = new ArrayList<>();
     public Member(GoogleAccount clientInfo) {
         this.memberEmail = clientInfo.getEmail();
