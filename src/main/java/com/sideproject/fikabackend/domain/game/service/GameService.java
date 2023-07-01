@@ -4,23 +4,21 @@ package com.sideproject.fikabackend.domain.game.service;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.junit.jupiter.api.Test;
-import org.springframework.expression.ParseException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
 
-class CrawlingTest {
 
+@Service
+public class GameService {
     public final String date = "20230701";
-
-    @Test
-    void fotmobTest() throws ParseException {
+    @Transactional
+    public void soccerGameInfo(){
 
         try {
 
@@ -122,10 +120,10 @@ class CrawlingTest {
             throw new RuntimeException();
         }
         System.out.println("정상종료");
+
     }
 
+
+
 }
-
-
-
 
