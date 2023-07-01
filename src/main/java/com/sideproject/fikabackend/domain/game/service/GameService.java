@@ -17,6 +17,9 @@ import java.util.Calendar;
 @Service
 public class GameService {
     public final String date = "20230701";
+    public final String date2 = "20230701";
+    public final String date3 = "20230701";
+    public final String date4 = "20230701";
     @Transactional
     public void soccerGameInfo(){
 

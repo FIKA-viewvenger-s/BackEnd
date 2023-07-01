@@ -1,10 +1,10 @@
-package com.sideproject.fikabackend.domain.social.google.service;
+package com.sideproject.fikabackend.domain.member.social.google.service;
 
 import com.sideproject.fikabackend.domain.member.entity.Member;
 import com.sideproject.fikabackend.domain.member.repository.MemberRepository;
-import com.sideproject.fikabackend.domain.social.google.client.GoogleClient;
-import com.sideproject.fikabackend.domain.social.google.dto.GoogleAccount;
-import com.sideproject.fikabackend.domain.social.google.dto.GoogleToken;
+import com.sideproject.fikabackend.domain.member.social.google.client.GoogleClient;
+import com.sideproject.fikabackend.domain.member.social.google.dto.GoogleAccount;
+import com.sideproject.fikabackend.domain.member.social.google.dto.GoogleToken;
 import com.sideproject.fikabackend.global.jwt.JwtTokenProvider;
 import com.sideproject.fikabackend.global.jwt.TokenInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -48,17 +48,12 @@ public class GoogleService {
     public GoogleAccount getInfo(final String code, HttpServletResponse response) {
         final GoogleToken token = getToken(code);
         log.info("토큰 정보 : {}", token.toString());
-
-        response.addHeader(JwtTokenProvider.ACCESSTOKEN_HEADER,token.getTokenType() + " " +  token.getAccessToken());
-        response.addHeader(JwtTokenProvider.REFRESHTOKEN_HEADER,token.getTokenType() + " " + token.getRefreshToken());
-
         try {
             GoogleAccount clientInfo = googleClient.getInfo(token.getIdToken());
             String username = clientInfo.getEmail();
             String password = passwordEncoder.encode(username + "임의의 난수");
             Optional<Member> byMemberId = memberRepository.findByMemberEmail(username);
             if (byMemberId.isEmpty()) {
-//                password = passwordEncoder.encode(username + "임의의 난수");
                 Member member = new Member(clientInfo);
                 memberRepository.save(member);
             }

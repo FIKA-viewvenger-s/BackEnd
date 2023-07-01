@@ -1,7 +1,7 @@
-package com.sideproject.fikabackend.domain.social.google.controller;
+package com.sideproject.fikabackend.domain.member.social.google.controller;
 
-import com.sideproject.fikabackend.domain.social.google.dto.GoogleAccount;
-import com.sideproject.fikabackend.domain.social.google.service.GoogleService;
+import com.sideproject.fikabackend.domain.member.social.google.dto.GoogleAccount;
+import com.sideproject.fikabackend.domain.member.social.google.service.GoogleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

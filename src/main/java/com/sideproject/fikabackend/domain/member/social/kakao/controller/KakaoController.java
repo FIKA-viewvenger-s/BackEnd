@@ -1,8 +1,8 @@
-package com.sideproject.fikabackend.domain.social.kakao.controller;
+package com.sideproject.fikabackend.domain.member.social.kakao.controller;
 
 
-import com.sideproject.fikabackend.domain.social.kakao.dto.KakaoAccount;
-import com.sideproject.fikabackend.domain.social.kakao.service.KakaoService;
+import com.sideproject.fikabackend.domain.member.social.kakao.dto.KakaoAccount;
+import com.sideproject.fikabackend.domain.member.social.kakao.service.KakaoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

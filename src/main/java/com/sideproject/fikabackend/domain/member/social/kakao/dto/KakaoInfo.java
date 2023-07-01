@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.social.kakao.dto;
+package com.sideproject.fikabackend.domain.member.social.kakao.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

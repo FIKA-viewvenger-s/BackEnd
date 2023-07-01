@@ -1,4 +1,4 @@
-package com.sideproject.fikabackend.domain.social.google.dto;
+package com.sideproject.fikabackend.domain.member.social.google.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

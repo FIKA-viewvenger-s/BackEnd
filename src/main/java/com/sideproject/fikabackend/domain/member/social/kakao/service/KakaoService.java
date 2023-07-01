@@ -1,11 +1,11 @@
-package com.sideproject.fikabackend.domain.social.kakao.service;
+package com.sideproject.fikabackend.domain.member.social.kakao.service;
 
 
 import com.sideproject.fikabackend.domain.member.entity.Member;
 import com.sideproject.fikabackend.domain.member.repository.MemberRepository;
-import com.sideproject.fikabackend.domain.social.kakao.client.KakaoClient;
-import com.sideproject.fikabackend.domain.social.kakao.dto.KakaoInfo;
-import com.sideproject.fikabackend.domain.social.kakao.dto.KakaoToken;
+import com.sideproject.fikabackend.domain.member.social.kakao.client.KakaoClient;
+import com.sideproject.fikabackend.domain.member.social.kakao.dto.KakaoInfo;
+import com.sideproject.fikabackend.domain.member.social.kakao.dto.KakaoToken;
 import com.sideproject.fikabackend.global.jwt.JwtTokenProvider;
 import com.sideproject.fikabackend.global.jwt.TokenInfo;
 import lombok.RequiredArgsConstructor;
