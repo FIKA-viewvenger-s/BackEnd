@@ -17,7 +17,7 @@ import java.util.TimeZone;
 
 class CrawlingTest {
 
-    public final String date = "20230701";
+    public final String date = "20230515";
 
     @Test
     void fotmobTest() throws ParseException {

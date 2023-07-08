@@ -50,6 +50,7 @@ public class GameService {
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
             JSONArray leagues = (JSONArray) jsonObject.get("leagues");
+            // TODO: 2023/07/08  리그 필터링
             for (Object leagueObj : leagues) {
                 JSONObject obj = (JSONObject) leagueObj;
                 nation = (String) obj.get("ccode");
@@ -108,12 +109,8 @@ public class GameService {
                     System.out.println("어웨이팀: " + awayTeamNm);
                     System.out.println("어웨이팀 스코어: " + awayTeamSc);
                     System.out.println("경기상태: " + status);
-
                 }
-
-
             }
-
 
         } catch (Exception e) {
             System.out.println("잘못된 접근");
