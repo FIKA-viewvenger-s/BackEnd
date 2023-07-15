@@ -26,9 +26,25 @@ public class Game {
     @NotNull(message = "Football-Home must not be null")
     private String gmHome;
 
+    /**홈팀 스코어**/
+    @NotNull(message = "Football-Home must not be null")
+    private String gmHomeScr;
+
+    /**홈팀 앰뷸럼 이미지**/
+    @NotNull(message = "Football-Home must not be null")
+    private String gmHomeImg;
+
     /**어웨이팀**/
     @NotNull(message = "Football-Away must not be null")
     private String gmAway;
+
+    /**어웨이팀 스코어**/
+    @NotNull(message = "Football-Away must not be null")
+    private String gmAwayScr;
+
+    /**어웨이팀 앰뷸럼 이미지**/
+    @NotNull(message = "Football-Away must not be null")
+    private String gmAwayImg;
 
     /**경기 장소**/
     @NotNull(message = "Football-Stadium must not be null")
