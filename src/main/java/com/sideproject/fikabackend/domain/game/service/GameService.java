@@ -80,7 +80,9 @@ public class GameService {
                         status = "cancelled";
                     } else if(start.equals("true") && finish.equals("false") && cancel.equals("false")){
                         status = "started";
-                    } else{
+                    } else if(start.equals("false") && finish.equals("false") && cancel.equals("false")){
+                        status = "none";
+                    } else {
                         status = "비정상종료";
                     }
 

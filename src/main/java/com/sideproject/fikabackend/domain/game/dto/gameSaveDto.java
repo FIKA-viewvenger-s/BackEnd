@@ -1,2 +1,4 @@
-package com.sideproject.fikabackend.domain.game.dto;public class gameSaveDto {
+package com.sideproject.fikabackend.domain.game.dto;
+
+public class gameSaveDto {
 }
