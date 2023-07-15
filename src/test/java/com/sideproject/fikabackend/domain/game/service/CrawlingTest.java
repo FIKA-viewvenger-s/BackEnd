@@ -34,6 +34,7 @@ class CrawlingTest {
             bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 
             result = bf.readLine();
+            System.out.println("result = " + result);
             String gameT;
             String nation;
             String league;
@@ -50,7 +51,9 @@ class CrawlingTest {
             // String 값을 JSON 형태로 추출하기 위해 사용하는 라이브러리
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
+            System.out.println("jsonObject = " + jsonObject);
             JSONArray leagues = (JSONArray) jsonObject.get("leagues");
+            System.out.println("leagues = " + leagues);
             for (Object leagueObj : leagues) {
                 JSONObject obj = (JSONObject) leagueObj;
                 nation = (String) obj.get("ccode");
