@@ -3,6 +3,7 @@ package com.sideproject.fikabackend.domain.chat.model;
 import com.sideproject.fikabackend.domain.chat.service.ChatService;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.HashSet;
@@ -15,7 +16,7 @@ import java.util.Set;
  * ENTER 상태인지 TALK 상태인지 판별하여 만약 ENTER 상태라면 session을 연결한뒤에 해당 sender가 입장했다는 메시지를 해당 채팅방에 보내고,
  * 만약 이미 연결된 TALK 상태라면 해당 메시지를 해당 채팅방에 입장해있는 모든 클라이언트들 (Websocket session)에게 메시지를 보낸다.
  **/
-
+@Slf4j
 @Getter
 public class ChatRoom {
     private String roomId;
@@ -32,9 +33,15 @@ public class ChatRoom {
         if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
             sessions.add(session);
             chatMessage.setMessage(chatMessage.getSender() + "님이 입장했습니다.");
+            log.info("{} 세선 생성", session.getId());
+        }
+
+        if(chatMessage.getType().equals(ChatMessage.MessageType.EXIT)){
+            sessions.remove(session);
+            chatMessage.setMessage(chatMessage.getSender() + "님이 나갔습니다.");
+            log.info("{} 연결 끊김.", session.getId());
         }
         sendMessage(chatMessage, chatService);
-
     }
 
     private <T> void sendMessage(T message, ChatService chatService) {
