@@ -32,9 +32,9 @@ public class GoogleService {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
 
-    public GoogleService(@Value("${api.google.client_id}") String clientId,
-                         @Value("${api.google.client_secret}") String clientSecret,
-                         @Value("${api.google.redirect_uri}") String redirectUri,
+    public GoogleService(@Value("${google.client_id}") String clientId,
+                         @Value("${google.client_secret}") String clientSecret,
+                         @Value("${google.redirect_uri}") String redirectUri,
                          GoogleClient googleClient, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, MemberRepository memberRepository) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
