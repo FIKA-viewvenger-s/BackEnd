@@ -17,8 +17,8 @@ public class LoginController {
     private final String googleAuthUrl;
     private final String kakaoAuthUrl;
 
-    public LoginController(@Value("${api.google.auth_url}") String googleAuthUrl,
-                           @Value("${kakao.code_url}") String kakaoAuthUrl) {
+    public LoginController(@Value("${google.auth_url}") String googleAuthUrl,
+                           @Value("${kakao.auth_url}") String kakaoAuthUrl) {
         this.googleAuthUrl = googleAuthUrl;
         this.kakaoAuthUrl = kakaoAuthUrl;
     }

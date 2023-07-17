@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "GoogleClient", url = "${api.google.token_base_url}")
+@FeignClient(name = "GoogleClient", url = "${google.token_base_url}")
 public interface GoogleClient {
 
     @PostMapping("/token")
