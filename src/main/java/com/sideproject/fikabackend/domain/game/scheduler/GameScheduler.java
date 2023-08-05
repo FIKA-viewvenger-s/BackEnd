@@ -77,7 +77,8 @@ public class GameScheduler {
                 String utcTime = (String) status.get("utcTime");
                 String[] convertDt = getConvertDt(utcTime);
 
-                GameDto gameDto = GameDto.builder().gmRound(round)
+                GameDto gameDto = GameDto.builder()
+                        .gmRound(round)
                         .gmId(Long.valueOf(matchId))
                         .gmTp(leagueType.getLeagueTp())
                         .gmLeague(leagueType.getLeagueNm())
