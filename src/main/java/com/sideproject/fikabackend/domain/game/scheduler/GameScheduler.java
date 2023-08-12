@@ -36,7 +36,7 @@ public class GameScheduler {
      * 매년 7월 1일 새벽 3시에 실행
      */
 //    @Scheduled(cron = "0 0 3 1 7 ? *")
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     public void save() {
 
         for (LeagueType leagueType : LeagueType.values()) {

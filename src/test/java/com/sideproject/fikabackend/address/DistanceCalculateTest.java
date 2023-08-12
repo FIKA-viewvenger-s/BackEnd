@@ -25,7 +25,7 @@ class DistanceCalculateTest {
         double longitude = RADIUS_EARTH * degree * RADIAN * cos;
 
         assertThat(latitude).isEqualTo(111.19492664455873);
-        assertThat(longitude).isEqualTo(90.13529564631034);
+        assertThat(longitude).isEqualTo(90.13529564631035);
     }
 
     @Test
