@@ -21,7 +21,7 @@ bin/
 application.properties
 
 # application.yml #
-application.yml
+*.yml
 
 ### IntelliJ IDEA ###
 .idea

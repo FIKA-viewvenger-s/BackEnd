@@ -1,6 +1,5 @@
 package com.sideproject.fikabackend.domain.game.service;
 
-import net.minidev.json.JSONUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,8 +15,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
 
 class LeagueServiceTest {
 

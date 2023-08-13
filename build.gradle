@@ -47,7 +47,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 
-    //json 파일 및 restapi 호출시 이용하는 라이브러리 의존성 주입
+    // json 파일 및 restapi 호출시 이용하는 라이브러리 의존성 주입
     implementation 'org.json:json:20190722'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation group: 'com.mashape.unirest', name: 'unirest-java', version: '1.3.1'
@@ -55,6 +55,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // 테스트 용도로 내장 서버 Redis 환경 구성
+    implementation 'it.ozimov:embedded-redis:0.7.2'
 }
 
 
